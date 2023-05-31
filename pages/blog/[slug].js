@@ -29,7 +29,7 @@ const BlogPost = () => {
       <Container>
         <PostTitle>Post {slug}</PostTitle>
         <PostContent>
-          This is the content of post {slug}. Lorem ipsum dolor sit amet,
+          This is the content of post {slug}. Lorem ipsum dolor sit amet amet,
           consectetur adipiscing elit.
         </PostContent>
       </Container>
