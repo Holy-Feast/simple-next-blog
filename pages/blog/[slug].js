@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
+import Layout from '../../components/Layout';
 const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
@@ -24,13 +25,15 @@ const BlogPost = () => {
   const { slug } = router.query;
 
   return (
-    <Container>
-      <PostTitle>Post {slug}</PostTitle>
-      <PostContent>
-        This is the content of post {slug}. Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit.
-      </PostContent>
-    </Container>
+    <Layout>
+      <Container>
+        <PostTitle>Post {slug}</PostTitle>
+        <PostContent>
+          This is the content of post {slug}. Lorem ipsum dolor sit amet,
+          consectetur adipiscing elit.
+        </PostContent>
+      </Container>
+    </Layout>
   );
 };
 

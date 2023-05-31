@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import Layout from '../components/Layout';
+import Layout from '../../components/Layout';
 
 const Container = styled.div`
   max-width: 800px;
