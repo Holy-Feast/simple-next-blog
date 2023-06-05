@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -26,23 +26,34 @@ const PostListItem = styled.li`
 `;
 
 const Home = () => {
-  const posts = [
-    { slug: 'post-1', title: 'Post 1' },
-    { slug: 'post-2', title: 'Post 2' },
-  ];
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+      const data = await response.json();
+      setPosts(data);
+    };
+
+    fetchPosts();
+  }, []);
 
   return (
     <Layout>
       <Container>
         <Title>Welcome to My Blog</Title>
         <PostList>
-          {posts.map((post) => (
-            <PostListItem key={post.slug}>
-              <Link href={`/blog/${post.slug}`} passHref>
-                {post.title}
-              </Link>
-            </PostListItem>
-          ))}
+          {posts.length ? (
+            posts.map((post) => (
+              <PostListItem key={post.id}>
+                <Link href={`/blog/${post.id}`} passHref>
+                  {post.title}
+                </Link>
+              </PostListItem>
+            ))
+          ) : (
+            <div>No posts</div>
+          )}
         </PostList>
       </Container>
     </Layout>
