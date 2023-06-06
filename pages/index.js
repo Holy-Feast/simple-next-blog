@@ -28,8 +28,8 @@ const PostListItem = styled.li`
 const Home = () => {
   useEffect
   const posts = fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(json => console.log(json))
+    .then(response => response.json())
+    .then(json => console.log(json))
 
   return (
     <Layout>
@@ -43,8 +43,8 @@ const Home = () => {
               </Link>
             </PostListItem>
           ))
-        :
-        <div>No posts</div>}
+            :
+            <div>No posts</div>}
         </PostList>
       </Container>
     </Layout>

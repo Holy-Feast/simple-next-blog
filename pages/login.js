@@ -38,18 +38,18 @@ const LoginButton = styled.button`
 `;
 
 const Login = () => {
-    return (
-        <Layout>
-            <LoginContainer>
-                <LoginForm>
-                    <LoginHeading>Login</LoginHeading>
-                    <LoginInput type="email" placeholder="Email" />
-                    <LoginInput type="password" placeholder="Password" />
-                    <LoginButton>Login</LoginButton>
-                </LoginForm>
-            </LoginContainer>
-        </Layout>
-    );
+  return (
+    <Layout>
+      <LoginContainer>
+        <LoginForm>
+          <LoginHeading>Login</LoginHeading>
+          <LoginInput type="email" placeholder="Email" />
+          <LoginInput type="password" placeholder="Password" />
+          <LoginButton>Login</LoginButton>
+        </LoginForm>
+      </LoginContainer>
+    </Layout>
+  );
 };
 
 export default Login;
