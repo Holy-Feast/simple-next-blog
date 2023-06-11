@@ -32,9 +32,11 @@ const NavLink = styled.span`
 const Header = () => {
   return (
     <HeaderContainer>
-      <Logo><Link href="/" passHref>
+      <Logo>
+        <Link href="/" passHref>
           <NavLink>Shelly`s</NavLink>
-        </Link></Logo>
+        </Link>
+      </Logo>
       <Nav>
         <Link href="/about" passHref>
           <NavLink>About</NavLink>

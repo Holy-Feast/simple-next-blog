@@ -33,11 +33,17 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [newPost, setNewPost] = useState({ title: '', body: '' });
-  const [editedPost, setEditedPost] = useState({ id: null, title: '', body: '' });
+  const [editedPost, setEditedPost] = useState({
+    id: null,
+    title: '',
+    body: '',
+  });
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+      const response = await fetch(
+        'https://jsonplaceholder.typicode.com/posts'
+      );
       const data = await response.json();
       setPosts(data);
     };
@@ -53,9 +59,8 @@ const Home = () => {
   };
   const openEditModalHandler = (post) => {
     if (post) {
-
       setEditedPost({ id: post.id, title: post.title, body: post.body });
-      return
+      return;
     }
     setOpenModal(true);
   };
@@ -74,7 +79,10 @@ const Home = () => {
 
   const addPost = async () => {
     try {
-      const response = await axios.post('https://jsonplaceholder.typicode.com/posts', editedPost);
+      const response = await axios.post(
+        'https://jsonplaceholder.typicode.com/posts',
+        editedPost
+      );
       const createdPost = response.data;
       setPosts((prevPosts) => [...prevPosts, createdPost]);
       closeModalHandler();
@@ -85,7 +93,9 @@ const Home = () => {
 
   const deletePost = async (postId) => {
     try {
-      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+      await axios.delete(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`
+      );
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     } catch (error) {
       console.error('Error deleting post:', error);
@@ -94,21 +104,29 @@ const Home = () => {
 
   const editPost = async (postId, updatedPostData) => {
     try {
-      await axios.put(`https://jsonplaceholder.typicode.com/posts/${postId}`, updatedPostData);
+      await axios.put(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`,
+        updatedPostData
+      );
       setPosts((prevPosts) =>
-        prevPosts.map((post) => (post.id === postId ? { ...post, ...updatedPostData } : post))
+        prevPosts.map((post) =>
+          post.id === postId ? { ...post, ...updatedPostData } : post
+        )
       );
     } catch (error) {
       console.error('Error editing post:', error);
     }
   };
 
-
   return (
     <Layout>
       <Container>
         <Title>Welcome to My Blog</Title>
-        <Button variant="outlined" color="secondary" onClick={() => openEditModalHandler()}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => openEditModalHandler()}
+        >
           Add Post
         </Button>
         <PostList>
@@ -118,10 +136,20 @@ const Home = () => {
                 <Link href={`/blog/${post.id}`} passHref>
                   {post.title}
                 </Link>
-                <Button variant="outlined" color="primary" size="small" onClick={() => openEditModalHandler(post)} >
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  onClick={() => openEditModalHandler(post)}
+                >
                   Edit
                 </Button>
-                <Button variant="outlined" color="secondary" size="small" onClick={() => deletePost(post.id)}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  onClick={() => deletePost(post.id)}
+                >
                   Delete
                 </Button>
               </PostListItem>
@@ -165,7 +193,6 @@ const Home = () => {
           >
             {editedPost.id ? 'Save Changes' : 'Add Post'}
           </Button>
-
         </div>
       </Modal>
     </Layout>
