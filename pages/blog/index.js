@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
+import { Container, Title, PostList, PostListItem } from './styles';
+
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
@@ -8,31 +9,9 @@ import TextField from '@mui/material/TextField';
 import Layout from '../../components/Layout';
 import axios from 'axios';
 
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-`;
-
-const PostList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const PostListItem = styled.li`
-  margin-bottom: 10px;
-`;
-
-const Home = () => {
+const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [newPost, setNewPost] = useState({ title: '', body: '' });
   const [editedPost, setEditedPost] = useState({
     id: null,
     title: '',
@@ -40,28 +19,30 @@ const Home = () => {
   });
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch(
-        'https://jsonplaceholder.typicode.com/posts'
-      );
-      const data = await response.json();
-      setPosts(data);
-    };
-
     fetchPosts();
   }, []);
-  const openModalHandler = () => {
-    setOpenModal(true);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(
+        'https://jsonplaceholder.typicode.com/posts'
+      );
+      setPosts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const closeModalHandler = () => {
     setOpenModal(false);
   };
   const openEditModalHandler = (post) => {
-    if (post) {
+    if (Object.keys(post).length) {
       setEditedPost({ id: post.id, title: post.title, body: post.body });
+      setOpenModal(true);
       return;
     }
+    setEditedPost({ title: '', body: '' });
     setOpenModal(true);
   };
 
@@ -125,7 +106,7 @@ const Home = () => {
         <Button
           variant="outlined"
           color="secondary"
-          onClick={() => openEditModalHandler()}
+          onClick={() => openEditModalHandler({})}
         >
           Add Post
         </Button>
@@ -199,4 +180,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Blog;

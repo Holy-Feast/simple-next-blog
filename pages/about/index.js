@@ -1,15 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import Layout from '../../components/Layout';
-const AboutContainer = styled.div`
-  color: #fff;
-  margin-top: 40px;
-`;
 
-const AboutHeading = styled.h4`
-  margin-bottom: 20px;
-`;
+import { AboutContainer, AboutHeading } from './styles';
 
 const About = () => {
   return (
