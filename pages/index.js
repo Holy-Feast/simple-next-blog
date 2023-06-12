@@ -27,19 +27,19 @@ const Home = () => {
     <Layout>
       <Container>
         <Title>Latest Posts</Title>
-        <PostList>
-          {posts.length ? (
-            posts.map((post) => (
+        {posts.length ? (
+          <PostList>
+            {posts.map((post) => (
               <PostListItem key={post.id}>
                 <Link href={`/blog/${post.id}`} passHref>
                   {post.title}
                 </Link>
               </PostListItem>
-            ))
-          ) : (
-            <div>No posts</div>
-          )}
-        </PostList>
+            ))}
+          </PostList>
+        ) : (
+          <div>No posts</div>
+        )}
       </Container>
     </Layout>
   );

@@ -11,7 +11,7 @@ import axios from 'axios';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editedPost, setEditedPost] = useState({
     id: null,
     title: '',
@@ -21,30 +21,20 @@ const Blog = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-
-  const fetchPosts = async () => {
-    try {
-      const response = await axios.get(
-        'https://jsonplaceholder.typicode.com/posts'
-      );
-      setPosts(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const closeModalHandler = () => {
-    setOpenModal(false);
+    setIsModalOpen(false);
   };
+  
   const openEditModalHandler = (post) => {
     if (Object.keys(post).length) {
       setEditedPost({ id: post.id, title: post.title, body: post.body });
-      setOpenModal(true);
+      setIsModalOpen(true);
       return;
     }
     setEditedPost({ title: '', body: '' });
-    setOpenModal(true);
+    setIsModalOpen(true);
   };
+  
 
   const updateEditedPostData = (event) => {
     setEditedPost((prevPost) => ({
@@ -57,13 +47,18 @@ const Blog = () => {
     editPost(editedPost.id, { title: editedPost.title, body: editedPost.body });
     closeModalHandler();
   };
-
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+      setPosts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   const addPost = async () => {
     try {
-      const response = await axios.post(
-        'https://jsonplaceholder.typicode.com/posts',
-        editedPost
-      );
+      const response = await axios.post('https://jsonplaceholder.typicode.com/posts', editedPost);
       const createdPost = response.data;
       setPosts((prevPosts) => [...prevPosts, createdPost]);
       closeModalHandler();
@@ -71,24 +66,19 @@ const Blog = () => {
       console.error('Error adding post:', error);
     }
   };
-
+  
   const deletePost = async (postId) => {
     try {
-      await axios.delete(
-        `https://jsonplaceholder.typicode.com/posts/${postId}`
-      );
+      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     } catch (error) {
       console.error('Error deleting post:', error);
     }
   };
-
+  
   const editPost = async (postId, updatedPostData) => {
     try {
-      await axios.put(
-        `https://jsonplaceholder.typicode.com/posts/${postId}`,
-        updatedPostData
-      );
+      await axios.put(`https://jsonplaceholder.typicode.com/posts/${postId}`, updatedPostData);
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
           post.id === postId ? { ...post, ...updatedPostData } : post
@@ -98,6 +88,7 @@ const Blog = () => {
       console.error('Error editing post:', error);
     }
   };
+  
 
   return (
     <Layout>
@@ -110,9 +101,9 @@ const Blog = () => {
         >
           Add Post
         </Button>
-        <PostList>
-          {posts.length ? (
-            posts.map((post) => (
+        {posts.length ? (
+          <PostList>
+            {posts.map((post) => (
               <PostListItem key={post.id}>
                 <Link href={`/blog/${post.id}`} passHref>
                   {post.title}
@@ -134,14 +125,14 @@ const Blog = () => {
                   Delete
                 </Button>
               </PostListItem>
-            ))
-          ) : (
-            <div>No posts</div>
-          )}
-        </PostList>
+            ))}
+          </PostList>
+        ) : (
+          <div>No posts</div>
+        )}
       </Container>
       <Modal
-        open={openModal}
+        open={isModalOpen}
         onClose={closeModalHandler}
         style={{
           display: 'flex',
