@@ -19,4 +19,8 @@ export const PostList = styled.ul`
 
 export const PostListItem = styled.li`
   margin-bottom: 10px;
+  border: 1px solid white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
 `;

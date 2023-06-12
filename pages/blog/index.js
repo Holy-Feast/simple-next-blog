@@ -108,22 +108,24 @@ const Blog = () => {
                 <Link href={`/blog/${post.id}`} passHref>
                   {post.title}
                 </Link>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                  onClick={() => openEditModalHandler(post)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  size="small"
-                  onClick={() => deletePost(post.id)}
-                >
-                  Delete
-                </Button>
+                <div>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    size="small"
+                    onClick={() => openEditModalHandler(post)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    size="small"
+                    onClick={() => deletePost(post.id)}
+                  >
+                    Delete
+                  </Button>
+                  </div>
               </PostListItem>
             ))}
           </PostList>
