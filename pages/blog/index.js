@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Container, Title, PostList, PostListItem } from './styles';
+import { Container, Title } from './styles';
 
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import PostListComponent from '../../components/PostsList';
 
 import Layout from '../../components/Layout';
 import axios from 'axios';
@@ -24,7 +24,7 @@ const Blog = () => {
   const closeModalHandler = () => {
     setIsModalOpen(false);
   };
-  
+
   const openEditModalHandler = (post) => {
     if (Object.keys(post).length) {
       setEditedPost({ id: post.id, title: post.title, body: post.body });
@@ -34,7 +34,7 @@ const Blog = () => {
     setEditedPost({ title: '', body: '' });
     setIsModalOpen(true);
   };
-  
+
 
   const updateEditedPostData = (event) => {
     setEditedPost((prevPost) => ({
@@ -55,7 +55,7 @@ const Blog = () => {
       console.log(error);
     }
   };
-  
+
   const addPost = async () => {
     try {
       const response = await axios.post('https://jsonplaceholder.typicode.com/posts', editedPost);
@@ -66,7 +66,7 @@ const Blog = () => {
       console.error('Error adding post:', error);
     }
   };
-  
+
   const deletePost = async (postId) => {
     try {
       await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
@@ -75,7 +75,7 @@ const Blog = () => {
       console.error('Error deleting post:', error);
     }
   };
-  
+
   const editPost = async (postId, updatedPostData) => {
     try {
       await axios.put(`https://jsonplaceholder.typicode.com/posts/${postId}`, updatedPostData);
@@ -88,7 +88,7 @@ const Blog = () => {
       console.error('Error editing post:', error);
     }
   };
-  
+
 
   return (
     <Layout>
@@ -102,33 +102,11 @@ const Blog = () => {
           Add Post
         </Button>
         {posts.length ? (
-          <PostList>
-            {posts.map((post) => (
-              <PostListItem key={post.id}>
-                <Link href={`/blog/${post.id}`} passHref>
-                  {post.title}
-                </Link>
-                <div>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    size="small"
-                    onClick={() => openEditModalHandler(post)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    size="small"
-                    onClick={() => deletePost(post.id)}
-                  >
-                    Delete
-                  </Button>
-                  </div>
-              </PostListItem>
-            ))}
-          </PostList>
+          <PostListComponent
+            posts={posts}
+            openEditModalHandler={openEditModalHandler}
+            deletePost={deletePost}
+          />
         ) : (
           <div>No posts</div>
         )}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
-
 import Layout from '../components/Layout';
 import { Container, Title, PostList, PostListItem } from '../styles/main';
 
