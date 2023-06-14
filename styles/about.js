@@ -8,4 +8,3 @@ export const AboutContainer = styled.div`
 export const AboutHeading = styled.h4`
   margin-bottom: 20px;
 `;
-

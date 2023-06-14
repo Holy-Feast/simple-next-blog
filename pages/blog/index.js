@@ -35,7 +35,6 @@ const Blog = () => {
     setIsModalOpen(true);
   };
 
-
   const updateEditedPostData = (event) => {
     setEditedPost((prevPost) => ({
       ...prevPost,
@@ -49,7 +48,9 @@ const Blog = () => {
   };
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+      const response = await axios.get(
+        'https://jsonplaceholder.typicode.com/posts'
+      );
       setPosts(response.data);
     } catch (error) {
       console.log(error);
@@ -58,7 +59,10 @@ const Blog = () => {
 
   const addPost = async () => {
     try {
-      const response = await axios.post('https://jsonplaceholder.typicode.com/posts', editedPost);
+      const response = await axios.post(
+        'https://jsonplaceholder.typicode.com/posts',
+        editedPost
+      );
       const createdPost = response.data;
       setPosts((prevPosts) => [...prevPosts, createdPost]);
       closeModalHandler();
@@ -69,7 +73,9 @@ const Blog = () => {
 
   const deletePost = async (postId) => {
     try {
-      await axios.delete(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+      await axios.delete(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`
+      );
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
     } catch (error) {
       console.error('Error deleting post:', error);
@@ -78,7 +84,10 @@ const Blog = () => {
 
   const editPost = async (postId, updatedPostData) => {
     try {
-      await axios.put(`https://jsonplaceholder.typicode.com/posts/${postId}`, updatedPostData);
+      await axios.put(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`,
+        updatedPostData
+      );
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
           post.id === postId ? { ...post, ...updatedPostData } : post
@@ -88,7 +97,6 @@ const Blog = () => {
       console.error('Error editing post:', error);
     }
   };
-
 
   return (
     <Layout>

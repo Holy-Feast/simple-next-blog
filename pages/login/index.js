@@ -2,8 +2,13 @@ import React from 'react';
 
 import Layout from '../../components/Layout';
 
-import { LoginContainer, LoginForm, LoginHeading, LoginInput, LoginButton } from '../../styles/login';
-
+import {
+  LoginContainer,
+  LoginForm,
+  LoginHeading,
+  LoginInput,
+  LoginButton,
+} from '../../styles/login';
 
 const Login = () => {
   return (
