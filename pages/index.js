@@ -1,51 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
-
+import axios from 'axios';
 import Layout from '../components/Layout';
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-`;
-
-const PostList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-const PostListItem = styled.li`
-  margin-bottom: 10px;
-`;
+import { Container, Title, PostList, PostListItem } from '../styles/main';
 
 const Home = () => {
-  useEffect
-  const posts = fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(json => console.log(json))
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get(
+        'https://jsonplaceholder.typicode.com/posts?_limit=10'
+      );
+      setPosts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Layout>
       <Container>
-        <Title>Welcome to My Blog</Title>
-        <PostList>
-          {posts.length ? posts.map((post) => (
-            <PostListItem key={post.id}>
-              <Link href={`/blog/${post.id}`} passHref>
-                {post.title}
-              </Link>
-            </PostListItem>
-          ))
-        :
-        <div>No posts</div>}
-        </PostList>
+        <Title>Latest Posts</Title>
+        {posts.length ? (
+          <PostList>
+            {posts.map((post) => (
+              <PostListItem key={post.id}>
+                <Link href={`/blog/${post.id}`} passHref>
+                  {post.title}
+                </Link>
+              </PostListItem>
+            ))}
+          </PostList>
+        ) : (
+          <div>No posts</div>
+        )}
       </Container>
     </Layout>
   );
