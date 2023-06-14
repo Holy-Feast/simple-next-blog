@@ -1,9 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import Layout from '../../components/Layout';
 
-import { LoginContainer, LoginForm, LoginHeading, LoginInput, LoginButton } from './styles';
+import { LoginContainer, LoginForm, LoginHeading, LoginInput, LoginButton } from '../../styles/login';
 
 
 const Login = () => {

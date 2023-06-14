@@ -2,7 +2,7 @@ import React from 'react';
 
 import Layout from '../../components/Layout';
 
-import { AboutContainer, AboutHeading } from './styles';
+import { AboutContainer, AboutHeading } from '../../styles/about';
 
 const About = () => {
   return (

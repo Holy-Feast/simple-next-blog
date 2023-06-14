@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Title } from './styles';
+import { Container, Title } from '../../styles/blog';
 
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
