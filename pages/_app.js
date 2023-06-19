@@ -18,14 +18,13 @@ const darkTheme = createTheme({
 
 export default function MyApp({ Component, pageProps }) {
   return (
-
     <Provider store={store}>
-    <ThemeProvider theme={darkTheme}>
-      <StyledThemeProvider theme={darkTheme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </StyledThemeProvider>
-    </ThemeProvider>
+      <ThemeProvider theme={darkTheme}>
+        <StyledThemeProvider theme={darkTheme}>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </StyledThemeProvider>
+      </ThemeProvider>
     </Provider>
   );
 }
