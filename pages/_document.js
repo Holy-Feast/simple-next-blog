@@ -31,9 +31,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head>
-          {/* Add any necessary meta tags or global styles here */}
-        </Head>
+        <Head>{/* Add any necessary meta tags or global styles here */}</Head>
         <body>
           <Main />
           <NextScript />
