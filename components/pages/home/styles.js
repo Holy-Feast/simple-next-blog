@@ -12,11 +12,3 @@ export const Title = styled.h1`
   margin-bottom: 20px;
 `;
 
-export const PostList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-`;
-
-export const PostListItem = styled.li`
-  margin-bottom: 10px;
-`;

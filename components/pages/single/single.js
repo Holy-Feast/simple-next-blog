@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import { Container, PostTitle, PostContent } from '../../styles/post';
+import { Container, PostTitle, PostContent } from './styles';
 
 const BlogPost = () => {
   const router = useRouter();

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Title } from '../../styles/blog';
+import { Container, Title } from './styles';
 
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import PostListComponent from '../../components/PostsList';
+import PostListComponent from '../../PostsList/PostsList';
 
 import axios from 'axios';
 
@@ -110,6 +110,7 @@ const Blog = () => {
             {posts.length ? (
                 <PostListComponent
                     posts={posts}
+                    isButtons={true}
                     openEditModalHandler={openEditModalHandler}
                     deletePost={deletePost}
                 />

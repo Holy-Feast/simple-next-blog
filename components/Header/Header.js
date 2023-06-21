@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { HeaderContainer, Logo, Nav, NavLink } from './styles/header';
+import { HeaderContainer, Logo, Nav, NavLink } from './styles';
 
 const Header = () => {
   return (

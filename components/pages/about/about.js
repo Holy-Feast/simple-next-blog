@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AboutContainer, AboutHeading } from '../../styles/about';
+import { AboutContainer, AboutHeading } from './styles';
 
 const About = () => {
   return (
