@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from '../components/Layout';
-import HomePage from '../components/pages/index';
+import Layout from '../components/Layout/Layout';
+import HomePage from '../components/pages/home/Home';
 const Home = () => {
   return (
     <Layout>

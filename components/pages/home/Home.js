@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import axios from 'axios';
-import { Container, Title, PostList, PostListItem } from '../../styles/main';
+import PostListComponent from '../../PostsList/PostsList';
+import { Container, Title } from './styles';
 
 const Home = () => {
     const [posts, setPosts] = useState([]);
@@ -25,15 +25,10 @@ const Home = () => {
         <Container>
             <Title>Latest Posts</Title>
             {posts.length ? (
-                <PostList>
-                    {posts.map((post) => (
-                        <PostListItem key={post.id}>
-                            <Link href={`/blog/${post.id}`} passHref>
-                                {post.title}
-                            </Link>
-                        </PostListItem>
-                    ))}
-                </PostList>
+                <PostListComponent
+                posts={posts}
+                isButtons={false}
+            />
             ) : (
                 <div>No posts</div>
             )}

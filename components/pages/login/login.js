@@ -5,7 +5,7 @@ import {
     LoginHeading,
     LoginInput,
     LoginButton,
-  } from '../../styles/login';
+  } from './styles';
   
   const Login = () => {
     return (
