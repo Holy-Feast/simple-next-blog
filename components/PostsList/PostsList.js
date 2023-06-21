@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { PostList, PostListItem } from './styles/postList';
+import { PostList, PostListItem } from './styles';
 import Button from '@mui/material/Button';
 
-const PostListComponent = ({ posts, openEditModalHandler, deletePost }) => {
+const PostListComponent = ({ posts, isButtons, openEditModalHandler, deletePost }) => {
   return (
     <PostList>
       {posts.map((post) => (
@@ -11,6 +11,7 @@ const PostListComponent = ({ posts, openEditModalHandler, deletePost }) => {
           <Link href={`/blog/${post.id}`} passHref>
             {post.title}
           </Link>
+          {isButtons ?? 
           <div>
             <Button
               variant="outlined"
@@ -29,6 +30,7 @@ const PostListComponent = ({ posts, openEditModalHandler, deletePost }) => {
               Delete
             </Button>
           </div>
+          }
         </PostListItem>
       ))}
     </PostList>

@@ -1,6 +1,6 @@
 import React from 'react';
-import Layout from '../../components/Layout';
-import BlogPostPage from '../../components/pages/blog/single';
+import Layout from '../../components/Layout/Layout';
+import BlogPostPage from '../../components/pages/single/single';
 
 const BlogPost = () => {
   return (
