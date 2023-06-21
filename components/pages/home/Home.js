@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import PostListComponent from '../../components/PostsList';
+import PostListComponent from '../../PostsList/PostsList';
 import { Container, Title } from './styles';
 
 const Home = () => {
@@ -27,9 +27,7 @@ const Home = () => {
             {posts.length ? (
                 <PostListComponent
                 posts={posts}
-                isButtons={true}
-                openEditModalHandler={openEditModalHandler}
-                deletePost={deletePost}
+                isButtons={false}
             />
             ) : (
                 <div>No posts</div>

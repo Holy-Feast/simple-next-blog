@@ -2,7 +2,7 @@ import React from 'react';
 
 import Layout from '../../components/Layout/Layout';
 
-import LoginPage from '../components/pages/login/login';
+import LoginPage from '../../components/pages/login/login';
 
 const Login = () => {
   return (
