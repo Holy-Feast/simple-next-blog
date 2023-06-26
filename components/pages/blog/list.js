@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Title } from './styles';
 
+import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
@@ -9,6 +10,8 @@ import PostListComponent from '../../PostsList/PostsList';
 import axios from 'axios';
 
 const Blog = () => {
+
+    const authorized = useSelector((state) => state.authorized);
     const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editedPost, setEditedPost] = useState({
@@ -110,7 +113,7 @@ const Blog = () => {
             {posts.length ? (
                 <PostListComponent
                     posts={posts}
-                    isButtons={true}
+                    isButtons={authorized}
                     openEditModalHandler={openEditModalHandler}
                     deletePost={deletePost}
                 />
@@ -122,11 +125,22 @@ const Blog = () => {
                 onClose={closeModalHandler}
                 style={{
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}
             >
-                <div>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '16px',
+                        padding: '36px',
+                        borderRadius: '12px',
+                        backgroundColor: '#323232'
+                    }}>
                     <h2>Add Post</h2>
                     <TextField
                         label="Title"

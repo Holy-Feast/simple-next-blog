@@ -15,6 +15,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         posts: action.payload,
       };
+    case 'SET_AUTHORIZED':
+      return {
+        ...state,
+        authorized: action.payload,
+      };
     default:
       return state;
   }
