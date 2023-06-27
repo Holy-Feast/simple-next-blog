@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Title } from './styles';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import PostListComponent from '../../PostsList/PostsList';
-
-import axios from 'axios';
-
+import {
+    fetchPosts,
+    saveEditedPost,
+    addPostAsync,
+    deletePostAsync,
+} from '../../../state/actions/actions';
 const Blog = () => {
-
+    const dispatch = useDispatch();
+    const posts = useSelector((state) => state.posts);
     const authorized = useSelector((state) => state.authorized);
-    const [posts, setPosts] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editedPost, setEditedPost] = useState({
         id: null,
@@ -21,8 +24,9 @@ const Blog = () => {
     });
 
     useEffect(() => {
-        fetchPosts();
-    }, []);
+        dispatch(fetchPosts());
+    }, [dispatch]);
+
     const closeModalHandler = () => {
         setIsModalOpen(false);
     };
@@ -31,10 +35,10 @@ const Blog = () => {
         if (Object.keys(post).length) {
             setEditedPost({ id: post.id, title: post.title, body: post.body });
             setIsModalOpen(true);
-            return;
+        } else {
+            setEditedPost({ title: '', body: '' });
+            setIsModalOpen(true);
         }
-        setEditedPost({ title: '', body: '' });
-        setIsModalOpen(true);
     };
 
     const updateEditedPostData = (event) => {
@@ -44,70 +48,32 @@ const Blog = () => {
         }));
     };
 
-    const saveEditedPost = () => {
-        editPost(editedPost.id, { title: editedPost.title, body: editedPost.body });
+    const handleSaveEditedPost = () => {
+        dispatch(saveEditedPost(editedPost.id, { title: editedPost.title, body: editedPost.body }));
         closeModalHandler();
     };
-    const fetchPosts = async () => {
-        try {
-            const response = await axios.get(
-                'https://jsonplaceholder.typicode.com/posts'
-            );
-            setPosts(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
-    const addPost = async () => {
+    const handleAddPost = async () => {
         try {
-            const response = await axios.post(
-                'https://jsonplaceholder.typicode.com/posts',
-                editedPost
-            );
-            const createdPost = response.data;
-            setPosts((prevPosts) => [...prevPosts, createdPost]);
+            await dispatch(addPostAsync(editedPost));
             closeModalHandler();
         } catch (error) {
             console.error('Error adding post:', error);
         }
     };
 
-    const deletePost = async (postId) => {
+    const handleDeletePost = async (postId) => {
         try {
-            await axios.delete(
-                `https://jsonplaceholder.typicode.com/posts/${postId}`
-            );
-            setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+            await dispatch(deletePostAsync(postId));
         } catch (error) {
             console.error('Error deleting post:', error);
-        }
-    };
-
-    const editPost = async (postId, updatedPostData) => {
-        try {
-            await axios.put(
-                `https://jsonplaceholder.typicode.com/posts/${postId}`,
-                updatedPostData
-            );
-            setPosts((prevPosts) =>
-                prevPosts.map((post) =>
-                    post.id === postId ? { ...post, ...updatedPostData } : post
-                )
-            );
-        } catch (error) {
-            console.error('Error editing post:', error);
         }
     };
 
     return (
         <Container>
             <Title>Welcome to My Blog</Title>
-            <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => openEditModalHandler({})}
-            >
+            <Button variant="outlined" color="secondary" onClick={() => openEditModalHandler({})}>
                 Add Post
             </Button>
             {posts.length ? (
@@ -115,7 +81,7 @@ const Blog = () => {
                     posts={posts}
                     isButtons={authorized}
                     openEditModalHandler={openEditModalHandler}
-                    deletePost={deletePost}
+                    deletePost={handleDeletePost}
                 />
             ) : (
                 <div>No posts</div>
@@ -139,8 +105,9 @@ const Blog = () => {
                         gap: '16px',
                         padding: '36px',
                         borderRadius: '12px',
-                        backgroundColor: '#323232'
-                    }}>
+                        backgroundColor: '#323232',
+                    }}
+                >
                     <h2>Add Post</h2>
                     <TextField
                         label="Title"
@@ -161,7 +128,7 @@ const Blog = () => {
                     <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={editedPost.id ? saveEditedPost : addPost}
+                        onClick={editedPost.id ? handleSaveEditedPost : handleAddPost}
                     >
                         {editedPost.id ? 'Save Changes' : 'Add Post'}
                     </Button>

@@ -20,6 +20,23 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         authorized: action.payload,
       };
+    case 'SAVE_EDITED_POST':
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post.id === action.payload.id ? { ...post, ...action.payload.updatedPostData } : post
+        ),
+      };
+    case 'ADD_POST':
+      return {
+        ...state,
+        posts: [...state.posts, action.payload],
+      };
+    case 'DELETE_POST':
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id !== action.payload),
+      };
     default:
       return state;
   }
