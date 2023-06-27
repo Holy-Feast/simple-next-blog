@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import PostListComponent from '../../PostsList/PostsList';
 import {
     fetchPosts,
-    saveEditedPost,
+    editPostAsync,
     addPostAsync,
     deletePostAsync,
 } from '../../../state/actions/actions';
@@ -48,8 +48,8 @@ const Blog = () => {
         }));
     };
 
-    const handleSaveEditedPost = () => {
-        dispatch(saveEditedPost(editedPost.id, { title: editedPost.title, body: editedPost.body }));
+    const handleEditPostAsync = () => {
+        dispatch(editPostAsync(editedPost.id, { title: editedPost.title, body: editedPost.body }));
         closeModalHandler();
     };
 
@@ -128,7 +128,7 @@ const Blog = () => {
                     <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={editedPost.id ? handleSaveEditedPost : handleAddPost}
+                        onClick={editedPost.id ? handleEditPostAsync : handleAddPost}
                     >
                         {editedPost.id ? 'Save Changes' : 'Add Post'}
                     </Button>
