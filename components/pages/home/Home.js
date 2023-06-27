@@ -12,11 +12,7 @@ const Home = ({ posts, fetchPosts }) => {
   return (
     <Container>
       <Title>Latest Posts</Title>
-      {posts.length ? (
         <PostListComponent posts={posts} isButtons={false} />
-      ) : (
-        <div>No posts</div>
-      )}
     </Container>
   );
 };

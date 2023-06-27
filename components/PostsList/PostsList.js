@@ -4,6 +4,11 @@ import { PostList, PostListItem } from './styles';
 import Button from '@mui/material/Button';
 
 const PostListComponent = (props) => {
+  if (!props.posts.length) {
+    return (
+      <div>No posts</div>
+    )
+  }
   return (
     <PostList>
       {props.posts.map((post) => (
