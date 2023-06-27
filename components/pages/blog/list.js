@@ -76,16 +76,12 @@ const Blog = () => {
             <Button variant="outlined" color="secondary" onClick={() => openEditModalHandler({})}>
                 Add Post
             </Button>
-            {posts.length ? (
-                <PostListComponent
-                    posts={posts}
-                    isButtons={authorized}
-                    openEditModalHandler={openEditModalHandler}
-                    deletePost={handleDeletePost}
-                />
-            ) : (
-                <div>No posts</div>
-            )}
+            <PostListComponent
+                posts={posts}
+                isButtons={authorized}
+                openEditModalHandler={openEditModalHandler}
+                deletePost={handleDeletePost}
+            />
             <Modal
                 open={isModalOpen}
                 onClose={closeModalHandler}
