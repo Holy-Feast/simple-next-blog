@@ -25,6 +25,7 @@ export const LoginInput = styled.input`
   padding: 10px;
   background-color: #fff;
   border: none;
+  color: #323232
 `;
 
 export const LoginButton = styled.button`
