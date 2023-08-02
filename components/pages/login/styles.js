@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Input from '@mui/material/Input';
+import Button from '@mui/material/Button';
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -23,24 +25,26 @@ export const LoginHeading = styled.h2`
   margin-bottom: 20px;
 `;
 
-export const LoginInput = styled.input`
+export const LoginInput = styled(Input)`
   margin-bottom: 20px;
   padding: 16px;
   color: #323232
   border-radius: 33px;
-background: #0F111A;
-box-shadow: inset 23px 23px 46px #090b10,
-            inset -23px -23px 46px #151724;
+  background: #0F111A;
+  box-shadow: inset 23px 23px 46px #090b10, inset -23px -23px 46px #151724;
 
 `;
 
-export const LoginButton = styled.button`
+export const LoginButton = styled(Button)`
   background-color: #fff;
-  color: #333;
+  color: #fff;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
   border-radius: 33px;
   background: linear-gradient(145deg, #0e0f17, #10121c);
   box-shadow:  17px 17px 48px #090b10, -17px -17px 48px #151724;
+  &:hover{
+    background:  #16400F;
+  }
 `;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Input from '@mui/material/Input';
 import { useForm, Controller } from 'react-hook-form';
 import {
   LoginContainer,
@@ -13,8 +14,6 @@ import {
 
 const Login = () => {
   const [users, setUsers] = useState([]);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false); // State variable for login error
   const dispatch = useDispatch();
   const router = useRouter();
@@ -53,7 +52,9 @@ const Login = () => {
   };
 
 
-  const handleLogin = (event) => {
+  const handleLogin = (data) => {
+    const { email, password } = data; // Destructure email and password from form data
+    console.log(email, password);
     const user = users.find(
       (user) => user.login === email && user.password === password
     );
