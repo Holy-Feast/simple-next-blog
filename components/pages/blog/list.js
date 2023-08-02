@@ -31,30 +31,22 @@ const Blog = () => {
     };
 
     const openEditModalHandler = (post) => {
-        if (Object.keys(post).length) {
-            setEditedPost({ id: post.id, title: post.title, body: post.body });
-            setIsModalOpen(true);
+        if (Object.keys(post).length > 1) {
+            setEditedPost(post);
+            
         } else {
             setEditedPost({ title: '', body: '' });
-            setIsModalOpen(true);
         }
+        setIsModalOpen(true);
     };
-
-    const updateEditedPostData = (event) => {
-        setEditedPost((prevPost) => ({
-            ...prevPost,
-            [event.target.name]: event.target.value,
-        }));
-    };
-
-    const handleEditPostAsync = () => {
-        dispatch(editPostAsync(editedPost.id, { title: editedPost.title, body: editedPost.body }));
+    const handleEditPostAsync = (data) => {
+        dispatch(editPostAsync(data.id, { title: data.title, body: data.body }));
         closeModalHandler();
     };
 
-    const handleAddPost = async () => {
+    const handleAddPost = async (data) => {
         try {
-            await dispatch(addPostAsync(editedPost));
+            await dispatch(addPostAsync(data));
             closeModalHandler();
         } catch (error) {
             console.error('Error adding post:', error);
