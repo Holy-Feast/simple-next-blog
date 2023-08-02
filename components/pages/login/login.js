@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useForm, Controller } from 'react-hook-form';
 import {
   LoginContainer,
   LoginForm,
@@ -13,7 +15,27 @@ const Login = () => {
   const [users, setUsers] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(false); // State variable for login error
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { control, handleSubmit, formState: { errors } } = useForm();
+
+  // Validation rules for email and password
+  const emailValidation = {
+    required: 'Email is required',
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+      message: 'Invalid email address',
+    },
+  };
+
+  const passwordValidation = {
+    required: 'Password is required',
+    minLength: {
+      value: 6,
+      message: 'Password must be at least 6 characters long',
+    },
+  };
 
   useEffect(() => {
     fetchUsers();
@@ -30,44 +52,57 @@ const Login = () => {
     }
   };
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
 
   const handleLogin = (event) => {
-    event.preventDefault();
     const user = users.find(
       (user) => user.login === email && user.password === password
     );
     if (user) {
-      dispatch({ type: 'SET_AUTHORIZED', payload: true }); // Dispatch action to set authorized state in Redux
+      dispatch({ type: 'SET_AUTHORIZED', payload: true });
+      router.push('/blog/');
     } else {
-      dispatch({ type: 'SET_AUTHORIZED', payload: false }); // Dispatch action to set authorized state in Redux
-      alert('Invalid email or password');
+      setLoginError(true); // Set login error to true if no matching user is found
     }
   };
 
   return (
     <LoginContainer>
-      <LoginForm onSubmit={handleLogin}>
+      <LoginForm onSubmit={handleSubmit(handleLogin)}>
         <LoginHeading>Login</LoginHeading>
-        <LoginInput
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={handleEmailChange}
+        <Controller
+          name="email"
+          control={control}
+          defaultValue=""
+          rules={emailValidation}
+          render={({ field }) => (
+            <>
+              <LoginInput
+                type="text"
+                placeholder="Email"
+                {...field}
+              />
+              {errors.email && <p>{errors.email.message}</p>}
+            </>
+          )}
         />
-        <LoginInput
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={handlePasswordChange}
+        <Controller
+          name="password"
+          control={control}
+          defaultValue=""
+          rules={passwordValidation}
+          render={({ field }) => (
+            <>
+              <LoginInput
+                type="password"
+                placeholder="Password"
+                {...field}
+              />
+              {errors.password && <p>{errors.password.message}</p>}
+            </>
+          )}
         />
         <LoginButton type="submit">Login</LoginButton>
+        {loginError && <p style={{ color: 'red' }}>Invalid email or password</p>} {/* Display the login error message */}
       </LoginForm>
     </LoginContainer>
   );
