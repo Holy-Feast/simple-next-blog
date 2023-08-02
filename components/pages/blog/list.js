@@ -3,9 +3,8 @@ import { Container, Title } from './styles';
 
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
 import PostListComponent from '../../PostsList/PostsList';
+import PostModal from '../../PostModal/PostModal';
 import {
     fetchPosts,
     editPostAsync,
@@ -73,63 +72,24 @@ const Blog = () => {
     return (
         <Container>
             <Title>Welcome to My Blog</Title>
-            <Button variant="outlined" color="secondary" onClick={() => openEditModalHandler({})}>
-                Add Post
-            </Button>
+            {authorized && (
+                <Button variant="outlined" color="secondary" onClick={() => openEditModalHandler({})}>
+                    Add Post
+                </Button>
+            )}
             <PostListComponent
                 posts={posts}
                 isButtons={authorized}
                 openEditModalHandler={openEditModalHandler}
                 deletePost={handleDeletePost}
             />
-            <Modal
-                open={isModalOpen}
-                onClose={closeModalHandler}
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}
-            >
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '16px',
-                        padding: '36px',
-                        borderRadius: '12px',
-                        backgroundColor: '#323232',
-                    }}
-                >
-                    <h2>Add Post</h2>
-                    <TextField
-                        label="Title"
-                        name="title"
-                        value={editedPost.title}
-                        onChange={updateEditedPostData}
-                    />
-
-                    <TextField
-                        label="Body"
-                        name="body"
-                        value={editedPost.body}
-                        onChange={updateEditedPostData}
-                        multiline
-                        rows={4}
-                    />
-
-                    <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={editedPost.id ? handleEditPostAsync : handleAddPost}
-                    >
-                        {editedPost.id ? 'Save Changes' : 'Add Post'}
-                    </Button>
-                </div>
-            </Modal>
+            <PostModal
+                isModalOpen={isModalOpen}
+                closeModalHandler={closeModalHandler}
+                editedPost={editedPost}
+                handleEditPostAsync={handleEditPostAsync}
+                handleAddPost={handleAddPost}
+            />
         </Container>
     );
 };
