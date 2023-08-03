@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import { useForm, Controller } from 'react-hook-form';
 import Typography from '@mui/material/Typography'; // Import Typography for displaying error message
@@ -63,7 +63,7 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
           }}
           render={({ field, fieldState }) => (
             <>
-              <TextField
+              <Input
                 {...field}
                 label="Title"
                 error={!!fieldState?.error}
@@ -93,7 +93,7 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
           }}
           render={({ field, fieldState }) => (
             <>
-              <TextField
+              <Input
                 {...field}
                 label="Body"
                 multiline
