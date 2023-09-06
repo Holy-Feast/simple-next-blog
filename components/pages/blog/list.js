@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Title } from './styles';
+import { Container, Title } from './styled';
 
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';

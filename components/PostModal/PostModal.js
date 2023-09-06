@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import { useForm, Controller } from 'react-hook-form';
 import Typography from '@mui/material/Typography'; // Import Typography for displaying error message
+import { Form } from './styled';
 
 const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostAsync, handleAddPost }) => {
   const { control, handleSubmit, reset } = useForm();
 
   // Reset the form whenever the editedPost prop changes
-  React.useEffect(() => {
+  useEffect(() => {
     reset(editedPost);
   }, [editedPost, reset]);
 
@@ -34,21 +35,8 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
         justifyContent: 'center',
       }}
     >
-      <form
+      <Form
         onSubmit={handleSubmit(onSubmit)}
-        style={{
-          height: '50%',
-          width: '50%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '32px',
-          padding: '12px',
-          borderRadius: '33px',
-          background: '#0F111A',
-          boxShadow: 'inset 23px 23px 46px #090b10, inset -23px -23px 46px #151724',
-        }}
       >
         <h2>Add Post</h2>
         <Controller
@@ -120,7 +108,7 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
         >
           {editedPost.id ? 'Save Changes' : 'Add Post'}
         </Button>
-      </form>
+      </Form>
     </Modal>
   );
 };

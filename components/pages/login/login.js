@@ -10,7 +10,7 @@ import {
   LoginHeading,
   LoginInput,
   LoginButton,
-} from './styles';
+} from './styled';
 
 const Login = () => {
   const [users, setUsers] = useState([]);
@@ -43,7 +43,7 @@ const Login = () => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get(
-        'https://647cc089c0bae2880ad1233e.mockapi.io/api/blog/users'
+        process.env.USERS_API_URL
       );
       setUsers(response.data);
     } catch (error) {

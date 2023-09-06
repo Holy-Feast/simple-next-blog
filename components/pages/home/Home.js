@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../../../state/actions/actions';
 import PostListComponent from '../../PostsList/PostsList';
-import { Container, Title } from './styles';
+import { Container, Title } from './styled';
 
 const Home = ({ posts, fetchPosts }) => {
   useEffect(() => {

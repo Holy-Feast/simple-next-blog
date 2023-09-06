@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPosts } from '../../../state/actions/actions';
-import { Container, PostTitle, PostContent } from './styles';
+import { Container, PostTitle, PostContent } from './styled';
 
 const BlogPost = () => {
 
