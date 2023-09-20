@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import Modal from '@mui/material/Modal';
-import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import { useForm, Controller } from 'react-hook-form';
-import Typography from '@mui/material/Typography'; // Import Typography for displaying error message
+import InputField from '../InputField/InputField';
 import { Form } from './styled';
 
 const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostAsync, handleAddPost }) => {
@@ -14,13 +13,13 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
     reset(editedPost);
   }, [editedPost, reset]);
 
-  const onSubmit = (data) => {
+  const onSubmit = useCallback((data) => {
     if (editedPost.id) {
       handleEditPostAsync(data);
     } else {
       handleAddPost(data);
     }
-  };
+  }, [editedPost, handleEditPostAsync, handleAddPost]);
 
   const sqlInjectionPattern = /^[\w\s.,!?-]*$/;
 
@@ -50,22 +49,20 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
             },
           }}
           render={({ field, fieldState }) => (
-            <>
-              <Input
-                {...field}
-                label="Title"
-                error={!!fieldState?.error}
-                style={{
-                  width: '80%',
-                  borderColor: fieldState?.error ? 'red' : 'inherit'
-                }} // Turn the border red if there is an error
-              />
-              {fieldState?.error && (
-                <Typography variant="caption" color="error">
-                  {fieldState?.error?.message}
-                </Typography>
-              )}
-            </>
+            <InputField
+              label="Title"
+              name="title"
+              control={control}
+              rules={{
+                required: 'Title is required',
+                pattern: {
+                  value: sqlInjectionPattern,
+                  message: 'Invalid characters found',
+                },
+              }}
+              field={field}
+              fieldState={fieldState}
+            />
           )}
         />
 
@@ -80,24 +77,22 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
             },
           }}
           render={({ field, fieldState }) => (
-            <>
-              <Input
-                {...field}
-                label="Body"
-                multiline
-                rows={4}
-                error={!!fieldState?.error}
-                style={{
-                  width: '80%',
-                  borderColor: fieldState?.error ? 'red' : 'inherit'
-                }} // Turn the border red if there is an error
-              />
-              {fieldState?.error && (
-                <Typography variant="caption" color="error">
-                  {fieldState?.error?.message}
-                </Typography>
-              )}
-            </>
+            <InputField
+              label="Body"
+              name="body"
+              control={control}
+              rules={{
+                required: 'Body is required',
+                pattern: {
+                  value: sqlInjectionPattern,
+                  message: 'Invalid characters found',
+                },
+              }}
+              fieldState={fieldState}
+              field={field}
+              multiline
+              rows={4}
+            />
           )}
         />
 

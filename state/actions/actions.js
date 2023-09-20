@@ -14,6 +14,20 @@ export const fetchPosts = () => {
   };
 };
 
+export const fetchUsers = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        process.env.USERS_API_URL
+      );
+      const users = response.data;
+      dispatch({ type: 'FETCH_USERS_SUCCESS', payload: users });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const saveEditedPost = (id, updatedPostData) => {
   return {
     type: 'SAVE_EDITED_POST',

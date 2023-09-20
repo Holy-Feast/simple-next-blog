@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import axios from 'axios';
-import Input from '@mui/material/Input';
+import { fetchUsers } from '../../../state/actions/actions';
 import { useForm, Controller } from 'react-hook-form';
 import {
   LoginContainer,
@@ -13,7 +12,7 @@ import {
 } from './styled';
 
 const Login = () => {
-  const [users, setUsers] = useState([]);
+  const users = useSelector((state) => state.users);
   const [loginError, setLoginError] = useState(false); // State variable for login error
   const dispatch = useDispatch();
   const router = useRouter();
@@ -37,24 +36,12 @@ const Login = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get(
-        process.env.USERS_API_URL
-      );
-      setUsers(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
 
   const handleLogin = (data) => {
     const { email, password } = data; // Destructure email and password from form data
-    console.log(email, password);
     const user = users.find(
       (user) => user.login === email && user.password === password
     );
