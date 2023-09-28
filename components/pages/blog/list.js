@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Title } from './styled';
-
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import PostListComponent from '../../PostsList/PostsList';
@@ -16,11 +15,7 @@ const Blog = () => {
     const posts = useSelector((state) => state.posts);
     const authorized = useSelector((state) => state.authorized);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editedPost, setEditedPost] = useState({
-        id: null,
-        title: '',
-        body: '',
-    });
+    const [editedPost, setEditedPost] = useState(true);
 
     useEffect(() => {
         dispatch(fetchPosts());

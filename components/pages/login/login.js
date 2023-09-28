@@ -10,6 +10,7 @@ import {
   LoginInput,
   LoginButton,
 } from './styled';
+import {SET_AUTHORIZED} from "@/state/constants";
 
 const Login = () => {
   const users = useSelector((state) => state.users);
@@ -46,7 +47,7 @@ const Login = () => {
       (user) => user.login === email && user.password === password
     );
     if (user) {
-      dispatch({ type: 'SET_AUTHORIZED', payload: true });
+      dispatch({ type: SET_AUTHORIZED, payload: true });
       router.push('/blog/');
     } else {
       setLoginError(true); // Set login error to true if no matching user is found
