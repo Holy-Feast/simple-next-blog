@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Title } from './styles';
+import { Container, Title } from './styled';
 
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
@@ -10,7 +10,7 @@ import {
     editPostAsync,
     addPostAsync,
     deletePostAsync,
-} from '../../../state/actions/actions';
+} from '@/state/actions/actions';
 const Blog = () => {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts);

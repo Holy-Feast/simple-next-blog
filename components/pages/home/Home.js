@@ -1,30 +1,23 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchPosts } from '../../../state/actions/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPosts } from '@/state/actions/actions';
 import PostListComponent from '../../PostsList/PostsList';
-import { Container, Title } from './styles';
+import { Container, Title } from './styled';
 
-const Home = ({ posts, fetchPosts }) => {
+const Home = () => {
+  const posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+    dispatch(fetchPosts());
+  }, [dispatch]);
 
   return (
     <Container>
       <Title>Latest Posts</Title>
-        <PostListComponent posts={posts} isButtons={false} />
+      <PostListComponent posts={posts} isButtons={false} />
     </Container>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    posts: state.posts,
-  };
-};
-
-const mapDispatchToProps = {
-  fetchPosts,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
