@@ -68,6 +68,7 @@ const Login = () => {
               <LoginInput
                 type="text"
                 placeholder="Email"
+                error={!!errors.email}
                 {...field}
               />
               {errors.email && <p>{errors.email.message}</p>}
@@ -84,6 +85,7 @@ const Login = () => {
               <LoginInput
                 type="password"
                 placeholder="Password"
+                error={!!errors.password}
                 {...field}
               />
               {errors.password && <p>{errors.password.message}</p>}
