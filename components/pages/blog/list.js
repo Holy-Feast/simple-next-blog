@@ -55,15 +55,20 @@ const Blog = () => {
             console.error('Error deleting post:', error);
         }
     };
-
-    return (
-        <Container>
-            <Title>Welcome to My Blog</Title>
-            {authorized && (
+    const renderAddPostButton = () => {
+        if (authorized) {
+            return (
                 <Button variant="outlined" color="secondary" onClick={() => openEditModalHandler({})}>
                     Add Post
                 </Button>
-            )}
+            );
+        }
+        return null;
+    };
+    return (
+        <Container>
+            <Title>Welcome to My Blog</Title>
+            {renderAddPostButton()}
             <PostListComponent
                 posts={posts}
                 isButtons={authorized}
