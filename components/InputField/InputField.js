@@ -1,20 +1,19 @@
 import React from 'react';
-import Input from '@mui/material/Input';
-import SqlValidationMessage from '../SqlValidationMessage/SqlValidationMessage';
+import TextField from '@mui/material/TextField';
 const InputField = ({ field, label, name, control, rules, fieldState }) => {
+    console.log(fieldState.error)
     return (
       <>
-        <Input
+        <TextField
           {...field}
           label={label}
           control={control}
           error={!!fieldState?.error}
           style={{
             width: '80%',
-            borderColor: fieldState?.error ? 'red' : 'inherit'
           }}
+          helperText={fieldState?.error?.message}
         />
-        <SqlValidationMessage fieldState={fieldState} />
       </>
     );
   };
