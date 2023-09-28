@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { fetchUsers } from '../../../state/actions/actions';
+import { fetchUsers } from '@/state/actions/actions';
 import { useForm, Controller } from 'react-hook-form';
 import {
   LoginContainer,

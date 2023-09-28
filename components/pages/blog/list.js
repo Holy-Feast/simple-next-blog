@@ -10,7 +10,7 @@ import {
     editPostAsync,
     addPostAsync,
     deletePostAsync,
-} from '../../../state/actions/actions';
+} from '@/state/actions/actions';
 const Blog = () => {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts);

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosts } from '../../../state/actions/actions';
+import { fetchPosts } from '@/state/actions/actions';
 import PostListComponent from '../../PostsList/PostsList';
 import { Container, Title } from './styled';
 

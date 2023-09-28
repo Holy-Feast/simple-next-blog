@@ -23,6 +23,8 @@ export default class MyDocument extends Document {
           </>
         ),
       };
+    } catch (e) {
+      console.log(e)
     } finally {
       sheet.seal();
     }
