@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import InputField from '../InputField/InputField';
 import { Form } from './styled';
 
-const EditPostModal = ({ title, isModalOpen, closeModalHandler, editedPost, handleAddPost, handleEditPostAsync, button }) => {
+const PostModal = ({ title, isModalOpen, closeModalHandler, editedPost, handleAddPost, handleEditPostAsync, button }) => {
   const { control, handleSubmit, reset } = useForm();
 
   // Reset the form whenever the editedPost prop changes
@@ -104,4 +104,4 @@ const EditPostModal = ({ title, isModalOpen, closeModalHandler, editedPost, hand
   );
 };
 
-export default EditPostModal;
+export default PostModal;

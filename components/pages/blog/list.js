@@ -3,7 +3,7 @@ import { Container, Title } from './styled';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import PostListComponent from '../../PostsList/PostsList';
-import EditPostModal from '../../PostModal/EditPostModal';
+import PostModal from '../../PostModal/PostModal';
 import {
     fetchPosts,
     editPostAsync,
@@ -84,7 +84,7 @@ const Blog = () => {
                 deletePost={handleDeletePost}
                 openEditModalHandler={openEditModalHandler}
             />
-                <EditPostModal
+                <PostModal
                     title={'Add post'}
                     isModalOpen={isAddModalOpen}
                     closeModalHandler={closeAddModalHandler}
@@ -92,7 +92,7 @@ const Blog = () => {
                     handleAddPost={handleAddPost} // Ensure that you pass the function here
                     button={'Add post'}
                 />
-                <EditPostModal
+                <PostModal
                     title={'Edit post'}
                     isModalOpen={isEditModalOpen}
                     closeModalHandler={closeEditModalHandler}
