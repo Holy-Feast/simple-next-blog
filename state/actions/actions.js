@@ -1,4 +1,12 @@
 import axios from 'axios';
+import {
+  ADD_POST,
+  DELETE_POST,
+  FETCH_POSTS_SUCCESS,
+  FETCH_USERS_SUCCESS,
+  SAVE_EDITED_POST
+} from "@/state/constants";
+
 
 export const fetchPosts = () => {
   return async (dispatch) => {
@@ -7,7 +15,7 @@ export const fetchPosts = () => {
         process.env.BLOG_API_URL
       );
       const posts = response.data;
-      dispatch({ type: 'FETCH_POSTS_SUCCESS', payload: posts });
+      dispatch({ type: FETCH_POSTS_SUCCESS, payload: posts });
     } catch (error) {
       console.log(error);
     }
@@ -21,7 +29,7 @@ export const fetchUsers = () => {
         process.env.USERS_API_URL
       );
       const users = response.data;
-      dispatch({ type: 'FETCH_USERS_SUCCESS', payload: users });
+      dispatch({ type: FETCH_USERS_SUCCESS, payload: users });
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +38,7 @@ export const fetchUsers = () => {
 
 export const saveEditedPost = (id, updatedPostData) => {
   return {
-    type: 'SAVE_EDITED_POST',
+    type: SAVE_EDITED_POST,
     payload: {
       id,
       updatedPostData,
@@ -39,14 +47,14 @@ export const saveEditedPost = (id, updatedPostData) => {
 };
 export const addPost = (post) => {
   return {
-    type: 'ADD_POST',
+    type: ADD_POST,
     payload: post,
   };
 };
 
 export const deletePost = (postId) => {
   return {
-    type: 'DELETE_POST',
+    type: DELETE_POST,
     payload: postId,
   };
 };
