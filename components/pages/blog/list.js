@@ -24,10 +24,10 @@ const Blog = () => {
     useEffect(() => {
         dispatch(fetchPosts());
     }, [dispatch]);
-
     const closeAddModalHandler = () => {
         setIsAddModalOpen(false);
     };
+
     const closeEditModalHandler = () => {
         setIsEditModalOpen(false);
     };
@@ -42,13 +42,13 @@ const Blog = () => {
     };
     const handleEditPostAsync = (data) => {
         dispatch(editPostAsync(data.id, { title: data.title, body: data.body }));
-        closeModalHandler();
+        closeEditModalHandler();
     };
 
     const handleAddPost = async (data) => {
         try {
             await dispatch(addPostAsync(data));
-            closeModalHandler();
+            closeAddModalHandler();
         } catch (error) {
             console.error('Error adding post:', error);
         }
@@ -65,7 +65,7 @@ const Blog = () => {
     const renderAddPostButton = () => {
         if (authorized) {
             return (
-                <Button variant="outlined" color="secondary" onClick={openAddModalHandler}>
+                <Button variant="outlined" color="secondary" onClick={openEditModalHandler}>
                     Add Post
                 </Button>
             );
@@ -88,8 +88,8 @@ const Blog = () => {
                     title={'Add post'}
                     isModalOpen={isAddModalOpen}
                     closeModalHandler={closeAddModalHandler}
-                    newPost={{}}
-                    handleAddPost={handleAddPost}
+                    editedPost={{}}
+                    handleAddPost={handleAddPost} // Ensure that you pass the function here
                     button={'Add post'}
                 />
                 <EditPostModal
