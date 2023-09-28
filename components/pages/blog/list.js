@@ -3,8 +3,7 @@ import { Container, Title } from './styled';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import PostListComponent from '../../PostsList/PostsList';
-import AddPostModal from '../../PostModal/AddPostModal'; // New modal component for adding posts
-import EditPostModal from '../../PostModal/EditPostModal'; // New modal component for editing posts
+import EditPostModal from '../../PostModal/EditPostModal';
 import {
     fetchPosts,
     editPostAsync,
