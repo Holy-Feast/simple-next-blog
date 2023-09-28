@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import InputField from '../InputField/InputField';
 import { Form } from './styled';
 
-const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostAsync, handleAddPost }) => {
+const EditPostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostAsync }) => {
   const { control, handleSubmit, reset } = useForm();
 
   // Reset the form whenever the editedPost prop changes
@@ -14,12 +14,8 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
   }, [editedPost, reset]);
 
   const onSubmit = useCallback((data) => {
-    if (editedPost.id) {
       handleEditPostAsync(data);
-    } else {
-      handleAddPost(data);
-    }
-  }, [editedPost, handleEditPostAsync, handleAddPost]);
+  }, [handleEditPostAsync]);
 
   const sqlInjectionPattern = /^[\w\s.,!?-]*$/;
 
@@ -37,7 +33,7 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
       <Form
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h2>Add Post</h2>
+        <h2>Edit Post</h2>
         <Controller
           name="title"
           control={control}
@@ -101,11 +97,11 @@ const PostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostA
             width: '60%'
           }}
         >
-          {editedPost.id ? 'Save Changes' : 'Add Post'}
+          Save Changes
         </Button>
       </Form>
     </Modal>
   );
 };
 
-export default PostModal;
+export default EditPostModal;
