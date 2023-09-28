@@ -26,8 +26,10 @@ const Blog = () => {
         dispatch(fetchPosts());
     }, [dispatch]);
 
-    const closeModalHandler = () => {
+    const closeAddModalHandler = () => {
         setIsAddModalOpen(false);
+    };
+    const closeEditModalHandler = () => {
         setIsEditModalOpen(false);
     };
 
@@ -83,17 +85,21 @@ const Blog = () => {
                 deletePost={handleDeletePost}
                 openEditModalHandler={openEditModalHandler}
             />
-                <AddPostModal
+                <EditPostModal
+                    title={'Add post'}
                     isModalOpen={isAddModalOpen}
-                    closeModalHandler={closeModalHandler}
-                    editedPost={{}}
+                    closeModalHandler={closeAddModalHandler}
+                    newPost={{}}
                     handleAddPost={handleAddPost}
+                    button={'Add post'}
                 />
                 <EditPostModal
+                    title={'Edit post'}
                     isModalOpen={isEditModalOpen}
-                    closeModalHandler={closeModalHandler}
+                    closeModalHandler={closeEditModalHandler}
                     editedPost={editedPost}
                     handleEditPostAsync={handleEditPostAsync}
+                    button={'Save post'}
                 />
         </Container>
     );

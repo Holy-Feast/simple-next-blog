@@ -5,17 +5,13 @@ import { useForm, Controller } from 'react-hook-form';
 import InputField from '../InputField/InputField';
 import { Form } from './styled';
 
-const EditPostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditPostAsync }) => {
+const EditPostModal = ({ title, isModalOpen, closeModalHandler, editedPost, handleEditPostAsync, button }) => {
   const { control, handleSubmit, reset } = useForm();
 
   // Reset the form whenever the editedPost prop changes
   useEffect(() => {
     reset(editedPost);
   }, [editedPost, reset]);
-
-  const onSubmit = useCallback((data) => {
-      handleEditPostAsync(data);
-  }, [handleEditPostAsync]);
 
   const sqlInjectionPattern = /^[\w\s.,!?-]*$/;
 
@@ -31,9 +27,9 @@ const EditPostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditP
       }}
     >
       <Form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleEditPostAsync)}
       >
-        <h2>Edit Post</h2>
+        <h2>{title}</h2>
         <Controller
           name="title"
           control={control}
@@ -97,7 +93,7 @@ const EditPostModal = ({ isModalOpen, closeModalHandler, editedPost, handleEditP
             width: '60%'
           }}
         >
-          Save Changes
+            {button}
         </Button>
       </Form>
     </Modal>
