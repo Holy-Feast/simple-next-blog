@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 const InputField = ({ field, label, name, control, rules, fieldState }) => {
-    console.log(fieldState.error)
     return (
       <>
         <TextField
