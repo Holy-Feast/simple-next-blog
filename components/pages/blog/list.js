@@ -10,39 +10,46 @@ import {
     addPostAsync,
     deletePostAsync,
 } from '@/state/actions/actions';
+
 const Blog = () => {
     const dispatch = useDispatch();
     const posts = useSelector((state) => state.posts);
     const authorized = useSelector((state) => state.authorized);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editedPost, setEditedPost] = useState(true);
+
+    // Separate state variables for add and edit modals
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [postToEdit, setPostToEdit] = useState(null);
 
     useEffect(() => {
         dispatch(fetchPosts());
     }, [dispatch]);
-
-    const closeModalHandler = () => {
-        setIsModalOpen(false);
+    const closeAddModalHandler = () => {
+        setIsAddModalOpen(false);
     };
 
+    const closeEditModalHandler = () => {
+        setIsEditModalOpen(false);
+    };
+
+    const openAddModalHandler = () => {
+        setIsAddModalOpen(true);
+    };
     const openEditModalHandler = (post) => {
-        if (Object.keys(post).length > 1) {
-            setEditedPost(post);
-            
-        } else {
-            setEditedPost({ title: '', body: '' });
-        }
-        setIsModalOpen(true);
+        setPostToEdit(post);
+        setIsEditModalOpen(true);
+
     };
     const handleEditPostAsync = (data) => {
         dispatch(editPostAsync(data.id, { title: data.title, body: data.body }));
-        closeModalHandler();
+        closeEditModalHandler();
     };
 
     const handleAddPost = async (data) => {
         try {
+            console.log(data)
             await dispatch(addPostAsync(data));
-            closeModalHandler();
+            closeAddModalHandler();
         } catch (error) {
             console.error('Error adding post:', error);
         }
@@ -55,33 +62,38 @@ const Blog = () => {
             console.error('Error deleting post:', error);
         }
     };
-    const renderAddPostButton = () => {
-        if (authorized) {
-            return (
-                <Button variant="outlined" color="secondary" onClick={() => openEditModalHandler({})}>
-                    Add Post
-                </Button>
-            );
-        }
-        return null;
-    };
+
     return (
         <Container>
             <Title>Welcome to My Blog</Title>
-            {renderAddPostButton()}
+            {authorized && (
+                <Button variant="outlined" color="secondary" onClick={openAddModalHandler}>
+                    Add Post
+                </Button>
+            )}
             <PostListComponent
                 posts={posts}
                 isButtons={authorized}
-                openEditModalHandler={openEditModalHandler}
-                deletePost={handleDeletePost}
-            />
-            <PostModal
-                isModalOpen={isModalOpen}
-                closeModalHandler={closeModalHandler}
-                editedPost={editedPost}
                 handleEditPostAsync={handleEditPostAsync}
-                handleAddPost={handleAddPost}
+                deletePost={handleDeletePost}
+                openEditModalHandler={openEditModalHandler}
             />
+
+            <PostModal
+                title={'Add post'}
+                isModalOpen={isAddModalOpen}
+                closeModalHandler={closeAddModalHandler}
+                handleSubmitForm={handleAddPost}
+                submitButtonText={'Add post'}
+            />
+                <PostModal
+                    title={'Edit post'}
+                    isModalOpen={isEditModalOpen}
+                    closeModalHandler={closeEditModalHandler}
+                    postToEdit={postToEdit}
+                    handleSubmitForm={handleEditPostAsync}
+                    submitButtonText={'Save post'}
+                />
         </Container>
     );
 };
