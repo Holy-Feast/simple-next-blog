@@ -65,7 +65,7 @@ const Blog = () => {
     const renderAddPostButton = () => {
         if (authorized) {
             return (
-                <Button variant="outlined" color="secondary" onClick={openEditModalHandler}>
+                <Button variant="outlined" color="secondary" onClick={openAddModalHandler}>
                     Add Post
                 </Button>
             );
