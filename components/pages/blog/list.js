@@ -40,13 +40,6 @@ const Blog = () => {
         setIsEditModalOpen(true);
 
     };
-    const handleSubmitForm = (data) => {
-        if (data.id) {
-            handleEditPostAsync(data);
-        } else {
-            handleAddPost(data);
-        }
-    }
     const handleEditPostAsync = (data) => {
         dispatch(editPostAsync(data.id, { title: data.title, body: data.body }));
         closeEditModalHandler();
@@ -54,6 +47,7 @@ const Blog = () => {
 
     const handleAddPost = async (data) => {
         try {
+            console.log(data)
             await dispatch(addPostAsync(data));
             closeAddModalHandler();
         } catch (error) {
@@ -84,19 +78,20 @@ const Blog = () => {
                 deletePost={handleDeletePost}
                 openEditModalHandler={openEditModalHandler}
             />
-                <PostModal
-                    title={'Add post'}
-                    isModalOpen={isAddModalOpen}
-                    closeModalHandler={closeAddModalHandler}
-                    handleSubmitForm={handleSubmitForm} // Ensure that you pass the function here
-                    submitButtonText={'Add post'}
-                />
+
+            <PostModal
+                title={'Add post'}
+                isModalOpen={isAddModalOpen}
+                closeModalHandler={closeAddModalHandler}
+                handleSubmitForm={handleAddPost}
+                submitButtonText={'Add post'}
+            />
                 <PostModal
                     title={'Edit post'}
                     isModalOpen={isEditModalOpen}
                     closeModalHandler={closeEditModalHandler}
                     postToEdit={postToEdit}
-                    handleSubmitForm={handleSubmitForm}
+                    handleSubmitForm={handleEditPostAsync}
                     submitButtonText={'Save post'}
                 />
         </Container>
