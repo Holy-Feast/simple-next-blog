@@ -19,7 +19,7 @@ const Blog = () => {
     // Separate state variables for add and edit modals
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [editedPost, setEditedPost] = useState(null);
+    const [postToEdit, setPostToEdit] = useState(null);
 
     useEffect(() => {
         dispatch(fetchPosts());
@@ -36,10 +36,17 @@ const Blog = () => {
         setIsAddModalOpen(true);
     };
     const openEditModalHandler = (post) => {
-        setEditedPost(post);
+        setPostToEdit(post);
         setIsEditModalOpen(true);
 
     };
+    const handleSubmitForm = (data) => {
+        if (data.id) {
+            handleEditPostAsync(data);
+        } else {
+            handleAddPost(data);
+        }
+    }
     const handleEditPostAsync = (data) => {
         dispatch(editPostAsync(data.id, { title: data.title, body: data.body }));
         closeEditModalHandler();
@@ -62,21 +69,14 @@ const Blog = () => {
         }
     };
 
-    const renderAddPostButton = () => {
-        if (authorized) {
-            return (
-                <Button variant="outlined" color="secondary" onClick={openAddModalHandler}>
-                    Add Post
-                </Button>
-            );
-        }
-        return null;
-    };
-
     return (
         <Container>
             <Title>Welcome to My Blog</Title>
-            {renderAddPostButton()}
+            {authorized && (
+                <Button variant="outlined" color="secondary" onClick={openAddModalHandler}>
+                    Add Post
+                </Button>
+            )}
             <PostListComponent
                 posts={posts}
                 isButtons={authorized}
@@ -88,17 +88,16 @@ const Blog = () => {
                     title={'Add post'}
                     isModalOpen={isAddModalOpen}
                     closeModalHandler={closeAddModalHandler}
-                    editedPost={{}}
-                    handleAddPost={handleAddPost} // Ensure that you pass the function here
-                    button={'Add post'}
+                    handleSubmitForm={handleSubmitForm} // Ensure that you pass the function here
+                    submitButtonText={'Add post'}
                 />
                 <PostModal
                     title={'Edit post'}
                     isModalOpen={isEditModalOpen}
                     closeModalHandler={closeEditModalHandler}
-                    editedPost={editedPost}
-                    handleEditPostAsync={handleEditPostAsync}
-                    button={'Save post'}
+                    postToEdit={postToEdit}
+                    handleSubmitForm={handleSubmitForm}
+                    submitButtonText={'Save post'}
                 />
         </Container>
     );

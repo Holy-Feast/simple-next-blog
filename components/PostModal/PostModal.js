@@ -1,24 +1,18 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { useForm, Controller } from 'react-hook-form';
 import InputField from '../InputField/InputField';
 import { Form } from './styled';
 
-const PostModal = ({ title, isModalOpen, closeModalHandler, editedPost, handleAddPost, handleEditPostAsync, button }) => {
-  const { control, handleSubmit, reset } = useForm();
+const PostModal = ({ title, isModalOpen, closeModalHandler, postToEdit = {}, handleSubmitForm, submitButtonText }) => {
+  const { control, reset } = useForm();
 
   // Reset the form whenever the editedPost prop changes
   useEffect(() => {
-    reset(editedPost);
-  }, [editedPost, reset]);
-    const onSubmit = useCallback((data) => {
-        if (editedPost.id) {
-            handleEditPostAsync(data);
-        } else {
-            handleAddPost(data);
-        }
-    }, [editedPost, handleEditPostAsync, handleAddPost]);
+    reset(postToEdit);
+  }, [postToEdit, reset]);
+
   const sqlInjectionPattern = /^[\w\s.,!?-]*$/;
 
   return (
@@ -32,7 +26,7 @@ const PostModal = ({ title, isModalOpen, closeModalHandler, editedPost, handleAd
         justifyContent: 'center',
       }}
     >
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmitForm}>
         <h2>{title}</h2>
         <Controller
           name="title"
@@ -97,7 +91,7 @@ const PostModal = ({ title, isModalOpen, closeModalHandler, editedPost, handleAd
             width: '60%'
           }}
         >
-            {button}
+            {submitButtonText}
         </Button>
       </Form>
     </Modal>
